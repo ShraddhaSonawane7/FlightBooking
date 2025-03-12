@@ -1,0 +1,93 @@
+<!-- Add Flight Button -->
+<button class="btn btn-primary" (click)="openModal('addFlightModal')">Add Flight</button>
+
+<!-- Modal for Adding Flight -->
+<div id="addFlightModal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal('addFlightModal')">&times;</span>
+    <h2>Add New Flight</h2>
+    <form (ngSubmit)="addFlight()">
+      <div class="form-group">
+        <label for="flightNumber">Flight Number</label>
+        <input type="text" id="flightNumber" class="form-control" [(ngModel)]="newFlight.flightNumber" name="flightNumber" required />
+      </div>
+      <div class="form-group">
+        <label for="airline">Airline</label>
+        <input type="text" id="airline" class="form-control" [(ngModel)]="newFlight.airline" name="airline" required />
+      </div>
+      <div class="form-group">
+        <label for="source">Source</label>
+        <input type="text" id="source" class="form-control" [(ngModel)]="newFlight.source" name="source" required />
+      </div>
+      <div class="form-group">
+        <label for="destination">Destination</label>
+        <input type="text" id="destination" class="form-control" [(ngModel)]="newFlight.destination" name="destination" required />
+      </div>
+      <div class="form-group">
+        <label for="departureTime">Departure Time</label>
+        <input type="datetime-local" id="departureTime" class="form-control" [(ngModel)]="newFlight.departureTime" name="departureTime" required />
+      </div>
+      <div class="form-group">
+        <label for="arrivalTime">Arrival Time</label>
+        <input type="datetime-local" id="arrivalTime" class="form-control" [(ngModel)]="newFlight.arrivalTime" name="arrivalTime" required />
+      </div>
+      <div class="form-group">
+        <label for="windowSeatPrice">Window Seat Price</label>
+        <input type="number" id="windowSeatPrice" class="form-control" [(ngModel)]="newFlight.windowSeatPrice" name="windowSeatPrice" required />
+      </div>
+      <div class="form-group">
+        <label for="aisleSeatPrice">Aisle Seat Price</label>
+        <input type="number" id="aisleSeatPrice" class="form-control" [(ngModel)]="newFlight.aisleSeatPrice" name="aisleSeatPrice" required />
+      </div>
+      <div class="form-group">
+        <label for="middleSeatPrice">Middle Seat Price</label>
+        <input type="number" id="middleSeatPrice" class="form-control" [(ngModel)]="newFlight.middleSeatPrice" name="middleSeatPrice" required />
+      </div>
+      <div class="form-group">
+        <label for="totalSeats">Total Seats</label>
+        <input type="number" id="totalSeats" class="form-control" [(ngModel)]="newFlight.totalSeats" name="totalSeats" required />
+      </div>
+      <div class="form-group">
+        <label for="availableSeats">Available Seats</label>
+        <input type="number" id="availableSeats" class="form-control" [(ngModel)]="newFlight.availableSeats" name="availableSeats" required />
+      </div>
+      <div class="form-group">
+        <label for="flightImage">Flight Image</label>
+        <input type="file" id="flightImage" class="form-control" (change)="onFileSelected($event)" />
+        <p *ngIf="percentDone > 0">Uploading: {{ percentDone }}%</p>
+        <p *ngIf="uploadSuccess" class="text-success">Upload Successful!</p>
+      </div>
+      <button type="submit" class="btn btn-success">Add Flight</button>
+      <button type="button" (click)="closeModal('addFlightModal')" class="btn btn-secondary">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<!-- Flight Table -->
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Flight Number</th>
+      <th>Airline</th>
+      <th>Source</th>
+      <th>Destination</th>
+      <th>Departure</th>
+      <th>Arrival</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let flight of flights">
+      <td>{{ flight.flightNumber }}</td>
+      <td>{{ flight.airline }}</td>
+      <td>{{ flight.source }}</td>
+      <td>{{ flight.destination }}</td>
+      <td>{{ flight.departureTime | date:'short' }}</td>
+      <td>{{ flight.arrivalTime | date:'short' }}</td>
+      <td>
+        <button (click)="deleteFlight(flight.flightId)" class="btn btn-danger">Delete</button>
+        <a [routerLink]="['/edit-flight', flight.flightId]" class="btn btn-warning">Update</a>
+      </td>
+    </tr>
+  </tbody>
+</table>

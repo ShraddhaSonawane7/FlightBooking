@@ -1,0 +1,86 @@
+<div class="container-fluid mt-5">
+  <div class="row">
+    <!-- Left Side: Sidebar Navigation for Filters -->
+    <div class="col-md-3">
+      <div class="sidebar">
+        <h3 class="sidebar-header">Filters</h3>
+        
+        <!-- Filters Section -->
+        <div class="filters">
+          <h4>Filter Options</h4>
+          
+          <div class="form-group">
+            <label for="airline">Airline:</label>
+            <input type="text" id="airline" class="form-control" [(ngModel)]="airline" placeholder="Enter airline name" />
+          </div>
+
+          <button class="btn btn-secondary mt-3" (click)="filterByAirline()">Filter by Airline</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side: Dashboard View for Flight Results -->
+    <div class="col-md-9">
+      <div class="dashboard">
+        <h2>Passenger Dashboard</h2>
+        <p>Welcome, Passenger!</p>
+
+        <!-- Flight Search Form (Horizontal on the top) -->
+        <div class="search-form mb-4">
+          <div class="form-row">
+            <div class="col-md-3">
+              <label for="source">Source:</label>
+              <input type="text" id="source" class="form-control" [(ngModel)]="source" placeholder="Enter source" />
+            </div>
+
+            <div class="col-md-3">
+              <label for="destination">Destination:</label>
+              <input type="text" id="destination" class="form-control" [(ngModel)]="destination" placeholder="Enter destination" />
+            </div>
+
+            <div class="col-md-3">
+              <label for="date">Date (optional):</label>
+              <input type="date" id="date" class="form-control" [(ngModel)]="date" />
+            </div>
+
+            <div class="col-md-3 d-flex align-items-end">
+              <button class="btn btn-primary w-100" (click)="searchFlights()">Search Flights</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+
+        <!-- Flight Results (Cards View) -->
+        <div *ngIf="flights.length > 0">
+          <h3>Available Flights:</h3>
+          <div class="row">
+            <div class="col-md-4 mb-4" *ngFor="let flight of flights">
+              <div class="card">
+                <img src="https://via.placeholder.com/150" alt="flight image" class="card-img-top" />
+                <div class="card-body">
+                  <h5 class="card-title">{{ flight.source }} to {{ flight.destination }}</h5>
+                  <p class="card-text"><strong>Departure:</strong> {{ flight.departureTime | date:'short' }}</p>
+                  <p class="card-text"><strong>Flight Number:</strong> {{ flight.flightNumber }}</p>
+                  <p class="card-text"><strong>Airline:</strong> {{ flight.airline }}</p>
+                  <p class="card-text"><strong>Window Seat:</strong> {{ flight.windowSeatPrice | currency }}</p>
+                  <p class="card-text"><strong>Aisle Seat:</strong> {{ flight.aisleSeatPrice | currency }}</p>
+                  <p class="card-text"><strong>Middle Seat:</strong> {{ flight.middleSeatPrice | currency }}</p>
+                  <button class="btn btn-primary w-100">Book Now</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- No Flights Available Message -->
+        <div *ngIf="flights.length === 0 && !errorMessage" class="alert alert-info">
+          No flights available for the given search and filters.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

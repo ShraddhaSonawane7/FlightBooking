@@ -1,0 +1,16 @@
+<div class="container mt-5">
+  <h2>Login</h2>
+  <form (ngSubmit)="login()">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" [(ngModel)]="email" name="email" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" [(ngModel)]="password" name="password" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Login</button>
+  </form>
+  <p *ngIf="errorMessage" class="text-danger">{{ errorMessage }}</p>
+  <p>Don't have an account as a Passenger? <a routerLink="/register">Register</a></p> <!-- Correct routerLink -->
+</div>
